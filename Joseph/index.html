@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joseph P. Delatorre – Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+:root {
+  --black: #0a0a09;
+  --off-white: #f0ede8;
+  --muted: rgba(240,237,232,0.5);
+  --hint: rgba(240,237,232,0.25);
+  --border: rgba(240,237,232,0.08);
+  --border-med: rgba(240,237,232,0.15);
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.15);
+  --sidebar-w: 72px;
+  --profile-w: 260px;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--off-white);
+  min-height: 100vh;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: rgba(240,237,232,0.15); border-radius: 2px; }
+
+/* ══════════════════════════════
+   ICON NAV SIDEBAR
+══════════════════════════════ */
+.icon-sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: #050505;
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 0 24px;
+  z-index: 100;
+  gap: 4px;
+}
+
+.icon-sidebar .logo {
+  width: 38px; height: 38px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #050505;
+  margin-bottom: 28px;
+  letter-spacing: .5px;
+}
+
+.nav-link {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--hint);
+  text-decoration: none;
+  gap: 3px;
+  transition: all .2s;
+  position: relative;
+}
+
+.nav-link i { font-size: 16px; }
+.nav-link span { font-size: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: .6px; }
+
+.nav-link:hover { color: var(--off-white); background: rgba(240,237,232,.05); }
+.nav-link.active { color: var(--green); }
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%; transform: translateY(-50%);
+  width: 2px; height: 24px;
+  background: var(--green);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ══════════════════════════════
+   PROFILE SIDEBAR
+══════════════════════════════ */
+.profile-sidebar {
+  position: fixed;
+  left: var(--sidebar-w); top: 0; bottom: 0;
+  width: var(--profile-w);
+  background: #0d0d0c;
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 32px;
+  z-index: 90;
+  overflow-y: auto;
+}
+
+.profile-photo {
+  width: 160px; height: 160px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1a18;
+  border: 0.5px solid var(--border-med);
+  margin-bottom: 24px;
+  flex-shrink: 0;
+  transition: transform .3s, border-color .3s;
+}
+.profile-photo:hover { transform: translateY(-4px); border-color: rgba(74,222,128,.3); }
+.profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.profile-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--off-white);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.profile-role {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.profile-divider {
+  width: 100%; height: 0.5px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+
+.info-tag {
+  display: flex; align-items: flex-start;
+  width: 100%; gap: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.info-tag .label {
+  background: var(--green-dim);
+  color: var(--green);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  min-width: 70px;
+  text-align: center;
+  letter-spacing: .3px;
+}
+
+.info-tag .value { color: var(--muted); flex: 1; line-height: 1.5; }
+
+.available-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--green-dim);
+  color: var(--green);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+
+.available-badge::before {
+  content: '●';
+  font-size: 8px;
+  color: var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+
+.profile-btns {
+  display: flex; gap: 8px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.btn {
+  flex: 1; padding: 10px 0;
+  border-radius: 8px;
+  font-size: 11px; font-weight: 600;
+  text-align: center; cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+  letter-spacing: .3px;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-outline {
+  border: 0.5px solid var(--border-med);
+  color: var(--off-white);
+  background: transparent;
+}
+.btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+.btn-solid {
+  background: var(--green);
+  color: #050505;
+  border: none;
+  font-weight: 700;
+}
+.btn-solid:hover { background: #22c55e; }
+
+/* ══════════════════════════════
+   MOBILE MENU BUTTON
+══════════════════════════════ */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px; left: 16px;
+  z-index: 110;
+  width: 42px; height: 42px;
+  background: var(--green);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 5px;
+  transition: all 0.3s;
+}
+.mobile-menu-btn span {
+  width: 18px; height: 1.5px;
+  background: #050505;
+  border-radius: 1px;
+  display: block;
+  transition: all 0.3s;
+}
+.mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(9px, 9px); }
+.mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+/* ══════════════════════════════
+   MAIN CONTENT
+══════════════════════════════ */
+.main-content {
+  margin-left: calc(var(--sidebar-w) + var(--profile-w));
+  flex: 1;
+  padding: 0;
+  max-width: 900px;
+}
+
+/* ══════════════════════════════
+   INTRO HERO — SCROLLYTELLING STYLE
+══════════════════════════════ */
+.intro-hero {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px 56px 56px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-hero::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -20%;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74,222,128,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.intro-greeting {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.intro-greeting::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s infinite;
+}
+
+.intro-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(48px, 7vw, 80px);
+  font-weight: 700;
+  color: var(--off-white);
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+}
+
+.intro-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 48px;
+  letter-spacing: .01em;
+}
+
+.intro-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 40px;
+  border-top: 0.5px solid var(--border);
+  padding-top: 32px;
+}
+
+.intro-info-item {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.intro-info-item i { color: var(--green); font-size: 13px; }
+
+.intro-social {
+  display: flex; gap: 10px;
+}
+
+.intro-social a {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border-med);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all .2s;
+}
+.intro-social a:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+.intro-image { display: none; }
+
+/* ══════════════════════════════
+   SECTION BASE — SCROLLYTELLING
+══════════════════════════════ */
+.section-card {
+  padding: 72px 56px;
+  border-bottom: 0.5px solid var(--border);
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp .6s forwards;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.section-card:nth-child(1) { animation-delay: .05s; }
+.section-card:nth-child(2) { animation-delay: .1s; }
+.section-card:nth-child(3) { animation-delay: .15s; }
+.section-card:nth-child(4) { animation-delay: .2s; }
+.section-card:nth-child(5) { animation-delay: .25s; }
+.section-card:nth-child(6) { animation-delay: .3s; }
+.section-card:nth-child(7) { animation-delay: .35s; }
+.section-card:nth-child(8) { animation-delay: .4s; }
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+.section-num {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hint);
+  margin-bottom: 40px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-num::after {
+  content: '';
+  flex: 1; max-width: 40px; height: 0.5px;
+  background: var(--border-med);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--off-white);
+  margin-bottom: 40px;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  display: block;
+  position: relative;
+}
+
+.section-title .accent { color: var(--green); }
+
+/* ══════════════════════════════
+   ABOUT
+══════════════════════════════ */
+.about-text {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 56px;
+  max-width: 640px;
+}
+.about-text strong { color: var(--off-white); font-weight: 500; }
+
+.services-label {
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--hint);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.services-label::after {
+  content: ''; flex: 1; max-width: 40px; height: 0.5px; background: var(--border-med);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.service-card {
+  background: var(--black);
+  padding: 32px 28px;
+  transition: background .2s;
+  cursor: default;
+}
+.service-card:hover { background: #111110; }
+
+.service-icon {
+  width: 40px; height: 40px;
+  border: 0.5px solid var(--border-med);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.service-card h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.service-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ══════════════════════════════
+   EXPERIENCE
+══════════════════════════════ */
+.timeline { padding-left: 0; position: relative; }
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 36px 0;
+  border-top: 0.5px solid var(--border);
+  position: relative;
+  transition: background .2s;
+}
+.timeline-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+.timeline-dot { display: none; }
+
+.timeline-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 12px;
+  margin-bottom: 14px;
+}
+
+.timeline-role {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--off-white);
+  letter-spacing: -.01em;
+}
+.timeline-company {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: .02em;
+}
+.timeline-date {
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--green);
+  border: 0.5px solid rgba(74,222,128,.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+.timeline-desc {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 620px;
+}
+
+/* ══════════════════════════════
+   EDUCATION
+══════════════════════════════ */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.edu-card {
+  background: var(--black);
+  padding: 36px 32px;
+  transition: background .2s;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+}
+.edu-card:hover { background: #111110; }
+
+.edu-icon {
+  width: 40px; height: 40px;
+  border: 0.5px solid var(--border-med);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.edu-card h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.edu-card .school { color: var(--muted); font-size: 13px; }
+.edu-card .year {
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--green); margin-top: 12px;
+}
+
+/* ══════════════════════════════
+   SKILLS
+══════════════════════════════ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.skill-group {
+  background: var(--black);
+  padding: 32px 28px;
+  transition: background .2s;
+  box-shadow: none;
+  border-radius: 0;
+  color: inherit;
+}
+.skill-group:hover { background: #111110; transform: none; box-shadow: none; }
+
+.skill-group h4 {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--hint);
+  margin-bottom: 20px;
+  position: relative;
+}
+.skill-group h4::after { display: none; }
+
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.skill-tag {
+  background: transparent;
+  color: var(--muted);
+  border: 0.5px solid var(--border-med);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 400;
+  transition: all .2s;
+  cursor: default;
+}
+.skill-tag:hover {
+  background: var(--green-dim);
+  color: var(--green);
+  border-color: rgba(74,222,128,.3);
+  transform: none;
+}
+
+/* ══════════════════════════════
+   ACHIEVEMENTS
+══════════════════════════════ */
+.achievements-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
+  border: 0.5px solid var(--border);
+}
+
+.achievement-card {
+  background: var(--black);
+  border-radius: 0;
+  overflow: hidden;
+  border: none;
+  border-bottom: 0.5px solid var(--border);
+  box-shadow: none;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  height: auto;
+  transition: background .2s;
+}
+.achievement-card:last-child { border-bottom: none; }
+.achievement-card:hover { background: #0f0f0e; transform: none; box-shadow: none; }
+
+.achievement-image {
+  width: 100%; height: auto;
+  min-height: 160px;
+  background: #0d0d0c;
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: rgba(74,222,128,.3);
+}
+
+.achievement-content {
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.achievement-card h4 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 12px;
+  line-height: 1.4;
+  letter-spacing: -.01em;
+}
+
+.achievement-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+  margin-bottom: 20px;
+  flex: 1;
+}
+
+.achievement-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.achievement-tags .tag {
+  background: transparent;
+  color: var(--muted);
+  border: 0.5px solid var(--border-med);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.achievement-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent;
+  color: var(--off-white);
+  border: 0.5px solid var(--border-med);
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s;
+  align-self: flex-start;
+  letter-spacing: .04em;
+  font-family: 'DM Sans', sans-serif;
+}
+.achievement-btn:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background: var(--green-dim);
+  transform: translateX(4px);
+}
+
+/* ══════════════════════════════
+   STRENGTHS
+══════════════════════════════ */
+#strengths { padding-top: 72px; }
+
+.strengths-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.strength-card {
+  background: var(--black);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background .2s;
+  border-radius: 0;
+}
+.strength-card:hover { background: #111110; transform: none; box-shadow: none; }
+
+.strength-icon {
+  width: 40px; height: 40px;
+  border: 0.5px solid var(--border-med);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.strength-icon i { font-size: 16px; color: var(--green); }
+
+.strength-name { font-size: 15px; font-weight: 500; color: var(--off-white); margin: 0; }
+.strength-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin: 0; }
+
+/* ══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 0.5px solid var(--border);
+}
+
+.contact-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 24px 20px;
+  text-decoration: none;
+  color: var(--off-white);
+  transition: background .2s;
+  background: var(--black);
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+.contact-item:hover { background: #111110; transform: none; box-shadow: none; }
+
+.contact-icon {
+  width: 38px; height: 38px;
+  border: 0.5px solid var(--border-med);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--green);
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.contact-item span { font-size: 13px; font-weight: 500; color: var(--off-white); }
+.contact-item small { font-size: 11px; color: var(--muted); display: block; margin-top: 2px; }
+
+/* ══════════════════════════════
+   KINETIC SECTION — 300FEETOUT STYLE
+══════════════════════════════ */
+.kinetic-section {
+  padding: 80px 56px;
+  border-bottom: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kinetic-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: rgba(240,237,232,.08);
+  line-height: 1.15;
+  transition: color .3s;
+  cursor: default;
+}
+.kinetic-line:hover { color: var(--off-white); }
+.kinetic-line.kactive { color: var(--off-white); }
+
+/* ══════════════════════════════
+   SKILLS MARQUEE
+══════════════════════════════ */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  padding: 16px 0;
+  margin: 0;
+}
+.marquee-track {
+  display: flex;
+  gap: 32px;
+  width: max-content;
+  animation: marquee 22s linear infinite;
+}
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.marquee-item { font-size: 12px; color: var(--hint); white-space: nowrap; letter-spacing: .06em; }
+.marquee-item.hot { color: var(--muted); }
+.marquee-sep { color: rgba(240,237,232,.1); }
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.footer {
+  padding: 40px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.5px solid var(--border);
+}
+.footer p { font-size: 12px; color: var(--hint); }
+.footer a { color: var(--green); text-decoration: none; }
+
+/* ══════════════════════════════
+   GALLERY MODAL
+══════════════════════════════ */
+.gallery-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,.92);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-modal.active { display: flex; opacity: 1; }
+
+.gallery-container {
+  background: #0d0d0c;
+  border: 0.5px solid var(--border-med);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: slideUp .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.gallery-close {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--green); border: none; color: #050505;
+  width: 36px; height: 36px; border-radius: 50%;
+  font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; z-index: 10; font-weight: 700;
+}
+.gallery-close:hover { background: #22c55e; transform: rotate(90deg); }
+
+.gallery-header {
+  padding: 28px 32px 16px;
+  border-bottom: 0.5px solid var(--border);
+  background: #0a0a09;
+}
+.gallery-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; color: var(--off-white); margin-bottom: 6px;
+}
+.gallery-header p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+.gallery-viewer {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding: 24px; flex: 1;
+  background: #050505; position: relative;
+}
+
+.gallery-image-wrapper {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  position: relative; max-height: 500px;
+}
+
+.gallery-image {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; border-radius: 8px;
+}
+
+.gallery-counter {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(0,0,0,.7); color: var(--off-white);
+  padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+}
+
+.gallery-nav {
+  background: transparent; border: 0.5px solid var(--border-med);
+  color: var(--off-white); width: 44px; height: 44px;
+  border-radius: 8px; font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s; flex-shrink: 0;
+}
+.gallery-nav:hover { border-color: var(--green); color: var(--green); }
+.gallery-prev { order: -1; }
+
+.gallery-thumbnails { padding: 16px 24px 24px; border-top: 0.5px solid var(--border); }
+.thumbnail-list {
+  display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px;
+}
+.thumbnail-list::-webkit-scrollbar { height: 3px; }
+.thumbnail-list::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 2px; }
+
+.thumbnail {
+  width: 72px; height: 72px; object-fit: cover; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  border: 0.5px solid transparent; flex-shrink: 0;
+}
+.thumbnail:hover { border-color: var(--border-med); }
+.thumbnail.active { border-color: var(--green); }
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 1100px) {
+  .mobile-menu-btn { display: flex; }
+
+  .icon-sidebar {
+    position: fixed; left: -80px; width: var(--sidebar-w);
+    transition: left .3s; z-index: 95;
+  }
+  .icon-sidebar.open { left: 0; width: 220px; }
+  .icon-sidebar.open .nav-link {
+    width: 100%; height: auto; border-radius: 0;
+    padding: 14px 20px; flex-direction: row; justify-content: flex-start;
+    gap: 14px;
+  }
+  .icon-sidebar.open .nav-link span { font-size: 12px; display: inline; text-transform: capitalize; letter-spacing: .02em; }
+  .icon-sidebar.open .nav-link i { font-size: 16px; min-width: 18px; }
+  .icon-sidebar.open .logo {
+    width: 100%; height: auto; padding: 16px 20px;
+    margin-bottom: 12px; border-radius: 0; justify-content: flex-start;
+    background: rgba(74,222,128,.08); color: var(--green); font-size: 14px;
+  }
+
+  .profile-sidebar {
+    position: fixed; left: -280px; top: 0; width: 280px;
+    transition: left .3s; z-index: 96; max-height: 100vh;
+  }
+  .profile-sidebar.open { left: 220px; }
+
+  .main-content { margin-left: 0; }
+  .intro-hero { min-height: auto; padding: 80px 32px 48px; }
+  .section-card { padding: 56px 32px; }
+  .kinetic-section { padding: 56px 32px; }
+  .footer { padding: 32px 32px; }
+}
+
+@media (max-width: 768px) {
+  .intro-name { font-size: 42px; }
+  .section-title { font-size: 28px; }
+  .kinetic-line { font-size: 32px; }
+  .strengths-grid { grid-template-columns: repeat(2,1fr); }
+  .achievement-card { grid-template-columns: 1fr; }
+  .achievement-image { min-height: 120px; }
+  .gallery-viewer { flex-direction: column; padding: 16px; }
+  .gallery-image-wrapper { max-height: 320px; }
+  .gallery-prev { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); order: initial; }
+  .gallery-next { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); }
+}
+
+@media (max-width: 580px) {
+  .section-card { padding: 40px 20px; }
+  .intro-hero { padding: 80px 20px 40px; }
+  .kinetic-section { padding: 40px 20px; }
+  .footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+  .strengths-grid { grid-template-columns: 1fr; }
+  .intro-info { flex-direction: column; gap: 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU BUTTON ── -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ── ICON NAV SIDEBAR ── -->
+<nav class="icon-sidebar">
+  <div class="logo">CV</div>
+  <a href="#about" class="nav-link active">
+    <i class="fas fa-user"></i><span>About</span>
+  </a>
+  <a href="#experience" class="nav-link">
+    <i class="fas fa-briefcase"></i><span>Experience</span>
+  </a>
+  <a href="#education" class="nav-link">
+    <i class="fas fa-graduation-cap"></i><span>Education</span>
+  </a>
+  <a href="#skills" class="nav-link">
+    <i class="fas fa-code"></i><span>Skills</span>
+  </a>
+  <a href="#achievements" class="nav-link">
+    <i class="fas fa-trophy"></i><span>Achievements</span>
+  </a>
+  <a href="#strengths" class="nav-link">
+    <i class="fas fa-star"></i><span>Strengths</span>
+  </a>
+  <a href="#contact" class="nav-link">
+    <i class="fas fa-envelope"></i><span>Contact</span>
+  </a>
+</nav>
+
+<!-- ── PROFILE SIDEBAR ── -->
+<aside class="profile-sidebar">
+  <div class="profile-photo">
+    <img src="Image/grd.jpg" alt="Joseph P. Delatorre Profile Picture">
+  </div>
+
+  <div class="profile-name">Joseph P. Delatorre</div>
+  <div class="profile-role">IT Specialist</div>
+
+  <div class="profile-divider"></div>
+
+  <div class="info-tag">
+    <span class="label">Age</span>
+    <span class="value">22</span>
+  </div>
+  <div class="info-tag">
+    <span class="label">Residence</span>
+    <span class="value">Philippines</span>
+  </div>
+  <div class="info-tag">
+    <span class="label">Address</span>
+    <span class="value">Abgao,Maasin City Southern Leyte, Philippines</span>
+  </div>
+  <div class="info-tag">
+    <span class="label">Language</span>
+    <span class="value"><span class="available-badge">English</span></span>
+  </div>
+
+  <div class="profile-btns">
+    <a href="#" onclick="downloadPDF(); return false;" class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+    <a href="#contact" onclick="showSection('contact'); return false;" class="btn btn-solid"><i class="fas fa-paper-plane"></i> Contact</a>
+  </div>
+</aside>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="main-content">
+
+  <!-- INTRO HERO — SCROLLYTELLING STYLE -->
+  <section class="intro-hero">
+    <div class="intro-content">
+      <div class="intro-greeting">Hello I'm</div>
+      <h1 class="intro-name">Joseph P.<br>Delatorre</h1>
+      <p class="intro-title">IT Specialist</p>
+
+      <div class="intro-info">
+        <div class="intro-info-item">
+          <i class="fas fa-envelope"></i>
+          <span>josephdelatorre2580@gmail.com</span>
+        </div>
+        <div class="intro-info-item">
+          <i class="fas fa-phone"></i>
+          <span>+63 906 190 2063</span>
+        </div>
+        <div class="intro-info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Maasin City, Southern Leyte, Philippines</span>
+        </div>
+      </div>
+
+      <div class="intro-social">
+        <a href="https://www.facebook.com/joseph.delatorre.99260/" target="_blank" title="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/boangtae" target="_blank" title="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://github.com" target="_blank" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" title="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="intro-image"></div>
+  </section>
+
+  <!-- SKILLS MARQUEE STRIP -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item hot">HTML5</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">CSS3</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">JavaScript</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">React</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Tailwind</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Node.js</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">PHP</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MySQL</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">WordPress</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Adobe XD</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Photoshop</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">REST APIs</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">SEO</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Agile</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">HTML5</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">CSS3</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">JavaScript</span><span class="marquee-sep">·</span>
+      <span class="marquee-item hot">React</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Tailwind</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Node.js</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">PHP</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">MySQL</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">WordPress</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Adobe XD</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Photoshop</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">REST APIs</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">SEO</span><span class="marquee-sep">·</span>
+      <span class="marquee-item">Agile</span><span class="marquee-sep">·</span>
+    </div>
+  </div>
+
+  <!-- KINETIC TEXT — 300FEETOUT STYLE -->
+  <div class="kinetic-section">
+    <div class="kinetic-line" data-ki="0">I design.</div>
+    <div class="kinetic-line" data-ki="1">I develop.</div>
+    <div class="kinetic-line" data-ki="2">I deploy.</div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section-card" style="display: block;">
+    <div class="section-num">00 — About</div>
+    <h2 class="section-title"><span class="accent">A</span>bout Me</h2>
+    <p class="about-text">
+      <strong>Hello! I'm Joseph P. Delatorre.</strong> Results-driven IT Specialist with extensive experience in information technology and web development. Adept at delivering clean, functional, and visually engaging digital solutions — from architecture to implementation. Thrives on complex, creative challenges and is committed to building high-quality digital experiences that balance technical rigor with intuitive design.
+    </p>
+
+    <div class="services-label">My Services</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-code"></i></div>
+        <h4>Web Development</h4>
+        <p>Modern and mobile-ready websites that will help you reach your audience.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-network-wired"></i></div>
+        <h4>Network Setup & Cabling</h4>
+        <p>Creating LAN cables, setting up networks, configuring systems, and resolving common hardware issues.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+        <h4>UI/UX Design</h4>
+        <p>Crafting beautiful, responsive interfaces using CSS and modern design principles that balance aesthetics with functionality.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-lightbulb"></i></div>
+        <h4>System Analysis & Solutions</h4>
+        <p>I identify problems, propose smart solutions, and implement strategies that deliver real results.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-tools"></i></div>
+        <h4>Hardware Trouble Shooter</h4>
+        <p>Diagnosing and repairing hardware issues to ensure optimal performance.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-cogs"></i></div>
+        <h4>IT Consulting</h4>
+        <p>Providing comprehensive IT solutions to optimize operations, enhance security, and drive digital transformation for businesses.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK EXPERIENCE -->
+  <section id="experience" class="section-card" style="display: none;">
+    <div class="section-num">01 — Work Experience</div>
+    <h2 class="section-title"><span class="accent">W</span>ork Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div>
+            <div class="timeline-role">Tourism System Developer</div>
+            <div class="timeline-company">Southern Leyte Tourism Project</div>
+          </div>
+          <span class="timeline-date">Current</span>
+        </div>
+        <p class="timeline-desc">Built a Progressive Web App (PWA) to immediately solve the tourism survey form issue, making it easy for tourists to submit feedback. Also created a tourism website that showcases local attractions, destinations, hotels, and complete visitor information for Southern Leyte.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-header">
+          <div>
+            <div class="timeline-role">System Support & Troubleshooter</div>
+            <div class="timeline-company">Maasin Arena Cockpit</div>
+          </div>
+          <span class="timeline-date">Current</span>
+        </div>
+        <p class="timeline-desc">Managed the Talpak system for Maasin Arena Cockpit, troubleshooting every teller PC and keeping hardware running smoothly. Worked with developers to report and resolve system issues, ensuring reliable updates and better performance.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="section-card" style="display: none;">
+    <div class="section-num">02 — Education</div>
+    <h2 class="section-title"><span class="accent">E</span>ducation</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fas fa-university"></i></div>
+        <h4>Bachelor of Science in Information Technology</h4>
+        <div class="school">Saint Joseph College, Southern Leyte</div>
+        <div class="year">2025 – 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section-card" style="display: none;">
+    <div class="section-num">03 — Skills</div>
+    <h2 class="section-title"><span class="accent">S</span>kills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Frontend</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Tailwind</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Backend & CMS</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">WordPress</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Hardware</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">PC Maintenance</span>
+          <span class="skill-tag">Hardware Troubleshooting</span>
+          <span class="skill-tag">Preventive Maintenance</span>
+          <span class="skill-tag">System Administration</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Software</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">System Creation</span>
+          <span class="skill-tag">Planning</span>
+          <span class="skill-tag">Technology Problem Solving</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Design Tools</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Adobe XD</span>
+          <span class="skill-tag">Photoshop</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>Other</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">SEO/Search Engine Optimization</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Agile</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements" class="section-card" style="display: none;">
+    <div class="section-num">04 — Achievements</div>
+    <h2 class="section-title"><span class="accent">A</span>chievements</h2>
+    <div class="achievements-grid">
+
+      <div class="achievement-card">
+        <div class="achievement-image">
+          <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div class="achievement-content">
+          <h4>Progressive Web App (PWA) - Tourism Survey</h4>
+          <p>Built a Progressive Web App to immediately solve the tourism survey form issue, making it easy for tourists to submit feedback in real-time. The app features offline functionality and instant data synchronization.</p>
+          <div class="achievement-tags">
+            <span class="tag">PWA</span>
+            <span class="tag">Service Worker</span>
+            <span class="tag">Real-time</span>
+          </div>
+          <a href="#" class="achievement-btn" onclick="openGallery('pwa'); return false;"><i class="fas fa-external-link-alt"></i> View Project</a>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="achievement-image">
+          <i class="fas fa-globe"></i>
+        </div>
+        <div class="achievement-content">
+          <h4>Southern Leyte Tourism Website</h4>
+          <p>Created a comprehensive tourism website showcasing local attractions, destinations, hotels, and complete visitor information for Southern Leyte. Designed to boost local tourism and provide travelers with all necessary travel guidance.</p>
+          <div class="achievement-tags">
+            <span class="tag">Web Design</span>
+            <span class="tag">SEO</span>
+            <span class="tag">Tourism</span>
+          </div>
+          <a href="#" class="achievement-btn" onclick="openGallery('tourism'); return false;"><i class="fas fa-external-link-alt"></i> View Project</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STRENGTHS -->
+  <section id="strengths" class="section-card" style="display: none;">
+    <div class="section-num">05 — Strengths</div>
+    <h2 class="section-title"><span class="accent">S</span>trengths</h2>
+    <div class="strengths-grid">
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-search"></i></div>
+        <h3 class="strength-name">Analytical Thinker</h3>
+        <p class="strength-desc">Identifies problems quickly and proposes smart, practical solutions — both in software systems and hardware environments.</p>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-comments"></i></div>
+        <h3 class="strength-name">Effective Communicator</h3>
+        <p class="strength-desc">Works closely with developers and teams to clearly report, document, and resolve technical issues with precision.</p>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-rocket"></i></div>
+        <h3 class="strength-name">Self-Starter</h3>
+        <p class="strength-desc">Takes initiative on real-world projects — like the Southern Leyte Tourism PWA — without needing to be directed.</p>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-sync-alt"></i></div>
+        <h3 class="strength-name">Adaptable</h3>
+        <p class="strength-desc">Comfortable switching between frontend, backend, hardware support, and IT consulting roles based on what the situation demands.</p>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3 class="strength-name">Detail-Oriented</h3>
+        <p class="strength-desc">Ensures reliability and clean output — from LAN cable setups to pixel-perfect UI design using CSS and modern design tools.</p>
+      </div>
+
+      <div class="strength-card">
+        <div class="strength-icon"><i class="fas fa-bullseye"></i></div>
+        <h3 class="strength-name">Results-Driven</h3>
+        <p class="strength-desc">Focuses on delivering tangible outcomes — from deployed web apps to optimized systems that serve real clients and real users.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-card" style="display: none;">
+    <div class="section-num">06 — Contact</div>
+    <h2 class="section-title"><span class="accent">C</span>ontact</h2>
+    <div class="contact-grid">
+      <a href="mailto:josephdelatorre2580@gmail.com" class="contact-item" data-copy="josephdelatorre2580@gmail.com">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <span>Email</span>
+          <small>josephdelatorre2580@gmail.com</small>
+        </div>
+      </a>
+      <a href="tel:+639061902063" class="contact-item" data-copy="+63 906 190 2063">
+        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+        <div>
+          <span>Phone</span>
+          <small>+63 906 190 2063</small>
+        </div>
+      </a>
+      <a href="https://www.google.com/maps/place/Abgao,+Maasin,+Southern+Leyte,+Philippines/@10.1374304,124.8444805" target="_blank" class="contact-item">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <span>Location</span>
+          <small>Maasin City,Southern Leyte, Philippines</small>
+        </div>
+      </a>
+      <a href="https://www.facebook.com/joseph.delatorre.99260/" target="_blank" class="contact-item">
+        <div class="contact-icon"><i class="fab fa-facebook-f"></i></div>
+        <div>
+          <span>Facebook</span>
+          <small>Joseph Delatorre</small>
+        </div>
+      </a>
+      <a href="https://www.instagram.com/boangtae" target="_blank" class="contact-item">
+        <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+        <div>
+          <span>Instagram</span>
+          <small>@boangtae</small>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Designed & Built by <a href="#">Joseph P. Delatorre</a> · © 2026 · All rights reserved</p>
+    <p style="color:rgba(240,237,232,.15); font-size:11px;">IT Specialist · Maasin City, PH</p>
+  </footer>
+
+</main>
+
+<!-- ── IMAGE GALLERY MODAL ── -->
+<div id="galleryModal" class="gallery-modal">
+  <div class="gallery-container">
+    <button class="gallery-close" onclick="closeGallery()">&times;</button>
+    <div class="gallery-header">
+      <h2 id="galleryTitle">Project Gallery</h2>
+      <p id="galleryDesc"></p>
+    </div>
+    <div class="gallery-viewer">
+      <button class="gallery-nav gallery-prev" onclick="previousImage()">&lt;</button>
+      <div class="gallery-image-wrapper">
+        <img id="galleryImage" src="" alt="Gallery Image" class="gallery-image">
+        <div class="gallery-counter">
+          <span id="currentImage">1</span> / <span id="totalImages">1</span>
+        </div>
+      </div>
+      <button class="gallery-nav gallery-next" onclick="nextImage()">&gt;</button>
+    </div>
+    <div class="gallery-thumbnails">
+      <div id="thumbnailContainer" class="thumbnail-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Gallery data for projects
+  const galleryData = {
+    tourism: {
+      title: 'Southern Leyte Tourism Website',
+      description: 'Showcase of the tourism website featuring local attractions, destinations, and visitor information.',
+      images: [
+        'image/tour.png','image/web1.png','image/web2.png','image/web3.png',
+        'image/web4.png','image/web5.png','image/web6.png'
+      ]
+    },
+    pwa: {
+      title: 'Progressive Web App (PWA) - Tourism Survey',
+      description: 'Mobile-responsive PWA for collecting tourism survey feedback with offline capability and real-time sync.',
+      images: [
+        'image/s1.webp','image/s2.webp','image/s3.webp','image/s4.webp',
+        'image/s5.webp','image/s6.webp','image/s7.webp','image/s8.webp'
+      ]
+    }
+  };
+
+  let currentGallery = null;
+  let currentImageIndex = 0;
+
+  function openGallery(projectType) {
+    const project = galleryData[projectType];
+    if (!project) return;
+    currentGallery = projectType;
+    currentImageIndex = 0;
+    document.getElementById('galleryTitle').textContent = project.title;
+    document.getElementById('galleryDesc').textContent = project.description;
+    document.getElementById('totalImages').textContent = project.images.length;
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    thumbnailContainer.innerHTML = '';
+    project.images.forEach((img, index) => {
+      const thumb = document.createElement('img');
+      thumb.src = img;
+      thumb.alt = `Thumbnail ${index + 1}`;
+      thumb.className = 'thumbnail ' + (index === 0 ? 'active' : '');
+      thumb.onclick = () => { currentImageIndex = index; displayImage(); };
+      thumbnailContainer.appendChild(thumb);
+    });
+    displayImage();
+    document.getElementById('galleryModal').classList.add('active');
+  }
+
+  function closeGallery() {
+    document.getElementById('galleryModal').classList.remove('active');
+    currentGallery = null;
+  }
+
+  function displayImage() {
+    if (!currentGallery) return;
+    const project = galleryData[currentGallery];
+    document.getElementById('galleryImage').src = project.images[currentImageIndex];
+    document.getElementById('currentImage').textContent = currentImageIndex + 1;
+    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+      thumb.classList.toggle('active', index === currentImageIndex);
+    });
+  }
+
+  function nextImage() {
+    if (!currentGallery) return;
+    currentImageIndex = (currentImageIndex + 1) % galleryData[currentGallery].images.length;
+    displayImage();
+  }
+
+  function previousImage() {
+    if (!currentGallery) return;
+    currentImageIndex = (currentImageIndex - 1 + galleryData[currentGallery].images.length) % galleryData[currentGallery].images.length;
+    displayImage();
+  }
+
+  document.addEventListener('click', function(event) {
+    if (event.target === document.getElementById('galleryModal')) closeGallery();
+  });
+  document.addEventListener('keydown', function(event) {
+    if (!currentGallery) return;
+    if (event.key === 'ArrowRight') nextImage();
+    if (event.key === 'ArrowLeft') previousImage();
+    if (event.key === 'Escape') closeGallery();
+  });
+
+  // Section toggle
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  function showSection(sectionId) {
+    sections.forEach(section => {
+      section.style.display = section.id === sectionId ? 'block' : 'none';
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + sectionId);
+    });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      showSection(this.getAttribute('href').substring(1));
+    });
+  });
+
+  showSection('about');
+
+  // Kinetic text animation
+  const kiLines = document.querySelectorAll('.kinetic-line');
+  let kiIdx = 0;
+  function animateKi() {
+    kiLines.forEach((l, i) => l.classList.toggle('kactive', i === kiIdx));
+    kiIdx = (kiIdx + 1) % kiLines.length;
+  }
+  animateKi();
+  setInterval(animateKi, 800);
+
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const iconSidebar = document.querySelector('.icon-sidebar');
+  const profileSidebar = document.querySelector('.profile-sidebar');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    iconSidebar.classList.toggle('open');
+    profileSidebar.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenuBtn.classList.remove('active');
+      iconSidebar.classList.remove('open');
+      profileSidebar.classList.remove('open');
+    });
+  });
+
+  // Copy to clipboard
+  document.querySelectorAll('.contact-item[data-copy]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      const copyText = item.getAttribute('data-copy');
+      navigator.clipboard.writeText(copyText).then(() => {
+        const icon = item.querySelector('.contact-icon');
+        icon.innerHTML = '<i class="fas fa-check" style="color:var(--green)"></i>';
+        setTimeout(() => {
+          icon.innerHTML = '<i class="fas fa-' + (copyText.includes('@') ? 'envelope' : 'phone') + '"></i>';
+        }, 2000);
+      }).catch(err => console.error('Failed to copy:', err));
+    });
+  });
+
+  // PDF Download
+  function downloadPDF() {
+    const element = document.querySelector('main');
+    const opt = {
+      margin: 10,
+      filename: 'Joseph_Delatorre_Resume.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
+</body>
+</html>
